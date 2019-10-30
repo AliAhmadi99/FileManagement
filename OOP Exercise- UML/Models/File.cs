@@ -13,7 +13,7 @@ namespace OOP_Exercise__UML.Models
             Format = format ?? throw new ArgumentNullException(nameof(format));
             Size = size;
             Folder = folder ?? throw new ArgumentNullException(nameof(folder));
-            var d = new File("", 1d, new Folder("", DateTime.Now, ""), "", DateTime.Now, "");
+            
         }
 
         public string Format { get; set; }
