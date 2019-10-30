@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OOP Exercise- UML\OOP Exercise- UML.csproj" />
+    <ProjectReference Include="..\OOP Exercise- UML\OopExercise.FileManagement.Web.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>OopExercise.FileManagement.Web</RootNamespace>
+    <AssemblyName>OopExercise.FileManagement.Web</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FileManagement.Domain\OopExercise.FileManagement.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

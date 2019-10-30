@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOP Exercise- UML", "OOP Exercise- UML\OOP Exercise- UML.csproj", "{F3EDA7EA-8846-459A-A05D-27394157DA22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OopExercise.FileManagement.Web", "OOP Exercise- UML\OopExercise.FileManagement.Web.csproj", "{F3EDA7EA-8846-459A-A05D-27394157DA22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{85A2FD27-E3F1-4AB1-BB19-32FF273418AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OopExercise.FileManagement.Test", "Test\OopExercise.FileManagement.Test.csproj", "{85A2FD27-E3F1-4AB1-BB19-32FF273418AC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OopExercise.FileManagement.Domain", "FileManagement.Domain\OopExercise.FileManagement.Domain.csproj", "{1B26B5DA-8D46-49FC-9676-FDA150A2C671}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{85A2FD27-E3F1-4AB1-BB19-32FF273418AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85A2FD27-E3F1-4AB1-BB19-32FF273418AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85A2FD27-E3F1-4AB1-BB19-32FF273418AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B26B5DA-8D46-49FC-9676-FDA150A2C671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B26B5DA-8D46-49FC-9676-FDA150A2C671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B26B5DA-8D46-49FC-9676-FDA150A2C671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B26B5DA-8D46-49FC-9676-FDA150A2C671}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
