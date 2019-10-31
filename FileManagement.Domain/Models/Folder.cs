@@ -5,9 +5,10 @@ namespace OopExercise.FileManagement.Domain.Models
 {
     public class Folder : Node
     {
-        public Folder(string name, string creator)
-            : base(name, creator)
+        public Folder(string name, string creator, Folder parent)
+            : base(name, creator, parent)
         {
+            Nodes = new List<Node>();
         }
 
         public List<Node> Nodes { get; set; }
@@ -20,6 +21,12 @@ namespace OopExercise.FileManagement.Domain.Models
                 totalSize += item.GetSize();
             }
             return totalSize;
+        }
+
+        public override void Rename(string newName)
+        {
+            ValidateName(newName);
+            Name = newName;
         }
     }
 }

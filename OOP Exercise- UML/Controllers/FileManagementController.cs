@@ -8,81 +8,78 @@ using System.Linq;
 namespace OopExercise.FileManagement.Web.Controllers
 {
     [ApiController]
-    //[Route("[controller]/{action}")]
-    [Route("api/Salam")]
+    [Route("api/[controller]/[action]")]
     public class FileManagementController : Controller
     {
+        private static Folder CurrentDirectory = new Folder("Root", "AdminStrator", null);
+
         public FileManagementController()
         {
 
         }
-        private static List<Node> CurrentDirectory = new List<Node>();
 
         [HttpPost]
         public IActionResult CreateFolder(CreateNodeDto newNode)
         {
-            var newFolder = new Folder(newNode.Name, newNode.CreatorName);
-            CurrentDirectory.Add(newFolder);
-            return Ok();
-        }
-
-        [Route("Test")]
-        public IActionResult Test()
-        {
-            return Ok("salam test !");
+            var newFolder = new Folder(newNode.Name, newNode.CreatorName, CurrentDirectory);
+            CurrentDirectory.Nodes.Add(newFolder);
+            return Ok(new FolderViewModel(CurrentDirectory));
         }
 
         [HttpPost]
         public IActionResult CreateFile(CreateNodeDto newNode)
         {
-            var newFile = new File(newNode.Name, newNode.CreatorName);
-            CurrentDirectory.Add(newFile);
-            return Ok();
+            var newFile = new File(newNode.Name, newNode.CreatorName, CurrentDirectory);
+            CurrentDirectory.Nodes.Add(newFile);
+            return Ok(new FolderViewModel(CurrentDirectory));
         }
 
-        [Route("{name:alpha}")]
+        [Route("{name}")]
         public IActionResult GoToDirectory(string name)
         {
-            var currentDir = GetNode(name);
-            if (currentDir is Folder folder) CurrentDirectory = folder.Nodes;
-            return Ok(CurrentDirectory);
+            var targetDirectory = GetNode(name);
+            if (targetDirectory is null) return NotFound(name + " Not Found!");
+            if (targetDirectory is Folder folder) CurrentDirectory = folder;
+            return Ok(new FolderViewModel(CurrentDirectory));
         }
 
         public IActionResult Back()
         {
-            var firstNodeInCurrentDirectory = CurrentDirectory.FirstOrDefault();
-            CurrentDirectory = firstNodeInCurrentDirectory.GetParentDirectory();
-            return Ok(CurrentDirectory);
+            CurrentDirectory = CurrentDirectory.ParentFolder ?? throw new Exception("You are in root address!");
+            return Ok(new FolderViewModel(CurrentDirectory));
         }
 
         [HttpPost]
-        public IActionResult Rename(string oldName, string newName)
+        public IActionResult Rename(RenameNodeDto renameNodeDto)
         {
-            var node = GetNode(oldName);
-            node.Rename(newName);
-            return Ok();
+            var node = GetNode(renameNodeDto.OldName);
+            if (node is null) return NotFound(renameNodeDto.OldName + " Not Found!");
+            node.Rename(renameNodeDto.NewName);
+            return Ok(new FolderViewModel(CurrentDirectory));
         }
 
-        [Route("{name:alpha}")]
+        [Route("{name}")]
         public IActionResult GetSize(string name)
         {
             var node = GetNode(name);
+            if (node is null) return NotFound(name + " Not Found!");
             return Ok(node.GetSize());
         }
 
-        [HttpPost]
+        [HttpPost,Route("{name}")]
         public IActionResult Remove(string name)
         {
             var fileToRemove = GetNode(name);
-            CurrentDirectory.Remove(fileToRemove);
-            return Ok();
+            if (fileToRemove is null) return NotFound(name + " Not Found!");
+            CurrentDirectory.Nodes.Remove(fileToRemove);
+            return Ok(new FolderViewModel(CurrentDirectory));
         }
 
         public IActionResult GetCurrentDirectory() => Ok(CurrentDirectory);
 
         #region Private Methods
         private Node GetNode(string name) =>
-            CurrentDirectory.SingleOrDefault(f => f.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            CurrentDirectory.Nodes.SingleOrDefault(f => f.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 
         #endregion
     }

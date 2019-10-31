@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "b7c8ce71-3ed8-4553-a644-6c97b68e811f",
+		"name": "FileManagement",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Test Folder36\",\n\t\"creatorName\":\"Ali Ahmadi\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:63113/api/FileManagement/CreateFolder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "63113",
+					"path": [
+						"api",
+						"FileManagement",
+						"CreateFolder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Open",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:63113/api/FileManagement/GoToDirectory/Test Folder33",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "63113",
+					"path": [
+						"api",
+						"FileManagement",
+						"GoToDirectory",
+						"Test Folder33"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Size",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:63113/api/FileManagement/GetSize/Test Folder5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "63113",
+					"path": [
+						"api",
+						"FileManagement",
+						"GetSize",
+						"Test Folder5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Back",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:63113/api/FileManagement/Back",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "63113",
+					"path": [
+						"api",
+						"FileManagement",
+						"Back"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Rename",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"oldName\":\"Test Folder55.mp4\",\n\t\"newName\":\"Test File.mp3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:63113/api/FileManagement/Rename",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "63113",
+					"path": [
+						"api",
+						"FileManagement",
+						"Rename"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:63113/api/FileManagement/Remove/Test Folder33",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "63113",
+					"path": [
+						"api",
+						"FileManagement",
+						"Remove",
+						"Test Folder33"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
