@@ -22,7 +22,7 @@ namespace OopExercise.FileManagement.Web.Controllers
         public IActionResult CreateFolder(CreateNodeDto newNode)
         {
             var newFolder = new Folder(newNode.Name, newNode.CreatorName, CurrentDirectory);
-            CurrentDirectory.Nodes.Add(newFolder);
+            CurrentDirectory.Add(newFolder);
             return Ok(new FolderViewModel(CurrentDirectory));
         }
 
@@ -30,7 +30,7 @@ namespace OopExercise.FileManagement.Web.Controllers
         public IActionResult CreateFile(CreateNodeDto newNode)
         {
             var newFile = new File(newNode.Name, newNode.CreatorName, CurrentDirectory);
-            CurrentDirectory.Nodes.Add(newFile);
+            CurrentDirectory.Add(newFile);
             return Ok(new FolderViewModel(CurrentDirectory));
         }
 
@@ -66,12 +66,12 @@ namespace OopExercise.FileManagement.Web.Controllers
             return Ok(node.GetSize());
         }
 
-        [HttpPost,Route("{name}")]
+        [HttpPost, Route("{name}")]
         public IActionResult Remove(string name)
         {
             var fileToRemove = GetNode(name);
             if (fileToRemove is null) return NotFound(name + " Not Found!");
-            CurrentDirectory.Nodes.Remove(fileToRemove);
+            CurrentDirectory.Remove(fileToRemove);
             return Ok(new FolderViewModel(CurrentDirectory));
         }
 

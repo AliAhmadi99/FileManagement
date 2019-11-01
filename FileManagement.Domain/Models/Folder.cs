@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OopExercise.FileManagement.Domain.Models
 {
@@ -8,10 +9,10 @@ namespace OopExercise.FileManagement.Domain.Models
         public Folder(string name, string creator, Folder parent)
             : base(name, creator, parent)
         {
-            Nodes = new List<Node>();
         }
 
-        public List<Node> Nodes { get; set; }
+        private List<Node> _nodes = new List<Node>();
+        public IReadOnlyCollection<Node> Nodes => _nodes.AsReadOnly();
 
         public override int GetSize()
         {
@@ -23,10 +24,17 @@ namespace OopExercise.FileManagement.Domain.Models
             return totalSize;
         }
 
-        public override void Rename(string newName)
+        public void Add(Node node)
         {
-            ValidateName(newName);
-            Name = newName;
+            ValidateName(node.Name);
+            if (_nodes.Any(node => node.Name.Equals(node.Name)) is true)
+                throw new Exception("A file or folder with this name is already exist.");
+            _nodes.Add(node);
+        }
+
+        public void Remove(Node node)
+        {
+            _nodes.Remove(node);
         }
     }
 }

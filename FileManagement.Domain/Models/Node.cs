@@ -9,19 +9,20 @@ namespace OopExercise.FileManagement.Domain.Models
         protected Node(string name, string creator, Folder parentFolder)
         {
             ParentFolder = parentFolder;
-            ValidateName(name);
-            if (ParentFolder?.Nodes.Any(node => node.Name.Equals(name)) is true)
-                throw new Exception("A file or folder with this name already exist.");
             Name = name ?? throw new ArgumentNullException(nameof(name));
             CreationDate = DateTime.Now;
             Creator = creator ?? throw new ArgumentNullException(nameof(creator));
         }
 
-        public string Name { get; set; }
-        public DateTime CreationDate { get; set; }
-        public string Creator { get; set; }
+        public string Name { get; private set; }
+        public DateTime CreationDate { get; }
+        public string Creator { get; }
         public Folder ParentFolder { get; set; }
-        public abstract void Rename(string newName);
+        public void Rename(string newName)
+        {
+            ValidateName(newName);
+            Name = newName;
+        }
         public abstract int GetSize();
         protected void ValidateName(string name)
         {

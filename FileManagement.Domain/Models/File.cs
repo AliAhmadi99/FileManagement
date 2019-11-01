@@ -16,16 +16,8 @@ namespace OopExercise.FileManagement.Domain.Models
 
         public string Format { get; set; }
         public int Size { get; set; }
+
         public override int GetSize() => Size;
-
-        public override void Rename(string newName)
-        {
-            var splitedName = newName.Split('.');
-            ValidateName(splitedName[0]);
-            Format = GetFormat(splitedName[1]);
-            Name = newName;
-        }
-
         private string GetFormat(string format)
         {
             if (string.IsNullOrWhiteSpace(format)) throw new ArgumentNullException(nameof(format));
