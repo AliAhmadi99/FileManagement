@@ -23,7 +23,6 @@ namespace OopExercise.FileManagement.Domain.Models
             }
             return totalSize;
         }
-
         public void Add(Node node)
         {
             ValidateName(node.Name);
@@ -31,10 +30,9 @@ namespace OopExercise.FileManagement.Domain.Models
                 throw new Exception("A file or folder with this name is already exist.");
             _nodes.Add(node);
         }
-
         public void Remove(Node node)
         {
-            _nodes.Remove(node);
+            _nodes.Remove(node ?? throw new ArgumentNullException(nameof(node)));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace OopExercise.FileManagement.Domain.Models
         public string Name { get; private set; }
         public DateTime CreationDate { get; }
         public string Creator { get; }
-        public Folder ParentFolder { get; set; }
+        public Folder ParentFolder { get; private set; }
         public void Rename(string newName)
         {
             ValidateName(newName);
@@ -44,6 +44,11 @@ namespace OopExercise.FileManagement.Domain.Models
                 if (name.Contains(unAllowedCharachters[i]))
                     throw new Exception($"You can't use '{unAllowedCharachters[i]}' in your file name.");
             }
+        }
+        public void MoveToAnotherFolder(Folder targetFolder)
+        {
+            ParentFolder = targetFolder ??
+                throw new ArgumentNullException(nameof(targetFolder));
         }
     }
 }

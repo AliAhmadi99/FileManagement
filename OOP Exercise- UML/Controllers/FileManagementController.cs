@@ -11,7 +11,7 @@ namespace OopExercise.FileManagement.Web.Controllers
     [Route("api/[controller]/[action]")]
     public class FileManagementController : Controller
     {
-        private static Folder CurrentDirectory = new Folder("Root", "AdminStrator", null);
+        private static Folder CurrentDirectory = new Folder("Root", "Administrator", null);
 
         public FileManagementController()
         {
@@ -38,7 +38,6 @@ namespace OopExercise.FileManagement.Web.Controllers
         public IActionResult GoToDirectory(string name)
         {
             var targetDirectory = GetNode(name);
-            if (targetDirectory is null) return NotFound(name + " Not Found!");
             if (targetDirectory is Folder folder) CurrentDirectory = folder;
             return Ok(new FolderViewModel(CurrentDirectory));
         }
@@ -53,7 +52,6 @@ namespace OopExercise.FileManagement.Web.Controllers
         public IActionResult Rename(RenameNodeDto renameNodeDto)
         {
             var node = GetNode(renameNodeDto.OldName);
-            if (node is null) return NotFound(renameNodeDto.OldName + " Not Found!");
             node.Rename(renameNodeDto.NewName);
             return Ok(new FolderViewModel(CurrentDirectory));
         }
@@ -62,7 +60,6 @@ namespace OopExercise.FileManagement.Web.Controllers
         public IActionResult GetSize(string name)
         {
             var node = GetNode(name);
-            if (node is null) return NotFound(name + " Not Found!");
             return Ok(node.GetSize());
         }
 
@@ -70,7 +67,6 @@ namespace OopExercise.FileManagement.Web.Controllers
         public IActionResult Remove(string name)
         {
             var fileToRemove = GetNode(name);
-            if (fileToRemove is null) return NotFound(name + " Not Found!");
             CurrentDirectory.Remove(fileToRemove);
             return Ok(new FolderViewModel(CurrentDirectory));
         }
@@ -78,9 +74,13 @@ namespace OopExercise.FileManagement.Web.Controllers
         public IActionResult GetCurrentDirectory() => Ok(CurrentDirectory);
 
         #region Private Methods
-        private Node GetNode(string name) =>
-            CurrentDirectory.Nodes.SingleOrDefault(f => f.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-
+        public Node GetNode(string nodeName)
+        {
+            var node = CurrentDirectory.Nodes.SingleOrDefault(f => f.Name
+            .Equals(nodeName, StringComparison.OrdinalIgnoreCase)) ??
+            throw new Exception(nodeName + " Not Found!");
+            return node;
+        }
         #endregion
     }
 }

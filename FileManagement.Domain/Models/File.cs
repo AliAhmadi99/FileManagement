@@ -14,13 +14,14 @@ namespace OopExercise.FileManagement.Domain.Models
             Size = new Random().Next(100, 250000);
         }
 
-        public string Format { get; set; }
+        public string Format { get; private set; }
         public int Size { get; set; }
 
         public override int GetSize() => Size;
-        private string GetFormat(string format)
+        private string GetFormat(string fileName)
         {
-            if (string.IsNullOrWhiteSpace(format)) throw new ArgumentNullException(nameof(format));
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
+            var format = fileName.Substring(fileName.LastIndexOf('.') + 1)?.ToLowerInvariant();
             ValidateName(format);
             return format;
         }
