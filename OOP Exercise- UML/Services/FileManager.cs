@@ -12,14 +12,19 @@ namespace OopExercise.FileManagement.Web.Services
     {
         private static Folder currentDirectory;
 
-        public FileManager(Folder rootDirectory)
+        public FileManager(string name, string creator)
         {
-            currentDirectory = rootDirectory;
+            currentDirectory = new Folder(name, creator, null);
         }
 
-        public void Add(string name, string creator)
+        public void AddFolder(string name, string creator)
         {
             var newNode = new Folder(name, creator, currentDirectory);
+            currentDirectory.Add(newNode);
+        }
+        public void AddFile(string name, string creator)
+        {
+            var newNode = new File(name, creator, currentDirectory);
             currentDirectory.Add(newNode);
         }
 
@@ -40,7 +45,8 @@ namespace OopExercise.FileManagement.Web.Services
 
         public void Back()
         {
-            currentDirectory = currentDirectory.ParentFolder ?? throw new Exception("You are in root address!");
+            currentDirectory = currentDirectory.ParentFolder ??
+                throw new Exception("You are in root address!");
         }
 
         public void Rename(string oldName, string newName)
@@ -64,6 +70,12 @@ namespace OopExercise.FileManagement.Web.Services
         public FolderViewModel GetCurrentDirectory()
         {
             return new FolderViewModel(currentDirectory);
+        }
+
+        public FolderViewModel GetNodeInfo(string nodeName)
+        {
+            var node = GetNode(nodeName);
+            return new FolderViewModel(node);
         }
     }
 }

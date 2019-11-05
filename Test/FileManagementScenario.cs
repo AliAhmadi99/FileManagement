@@ -2,6 +2,7 @@
 using OopExercise.FileManagement.Domain.Models;
 using OopExercise.FileManagement.Web.Controllers;
 using OopExercise.FileManagement.Web.Dtos;
+using OopExercise.FileManagement.Web.Services;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -13,45 +14,48 @@ namespace OopExercise.FileManagement.Test
 {
     public class FileManagementScenario
     {
-        private readonly FileManagementController fileManager = new FileManagementController();
-        private static Folder CurrentDirectory = new Folder("Root", "Administrator", null);
-
-        [Fact]
-        void CheckCurrentDirectory_Success()
-        {
-            var result = fileManager.GetCurrentDirectory() as ObjectResult;
-            Assert.Equal(result.StatusCode, (int)HttpStatusCode.OK);
-            Assert.NotNull(result);
-            Assert.NotNull(result.Value);
-            var folderInfo = result.Value as Folder;
-            Assert.Equal(CurrentDirectory.Name, folderInfo.Name);
-            Assert.Equal(CurrentDirectory.Creator, folderInfo.Creator);
-            Assert.Equal(CurrentDirectory.Nodes, folderInfo.Nodes);
-            Assert.Equal(folderInfo.ParentFolder, CurrentDirectory.ParentFolder);
-        }
+        private readonly FileManager fileManager = new FileManager("Root", "Administrator");
 
         [Fact]
         void CreateFile_Success()
         {
-            CheckCurrentDirectory_Success();
             var request = new CreateNodeDto
             {
                 Name = "test Video.mp4",
                 CreatorName = "Ali Ahmadi"
             };
-            var result = fileManager.CreateFile(request) as ObjectResult;
-            Assert.Equal(result.StatusCode, (int)HttpStatusCode.OK);
-            Assert.NotNull(result);
-            Assert.NotNull(result.Value);
-            //var fileInfo = fileManager.GetNode(request.Name) as File;
-            //Assert.Equal(request.Name, fileInfo.Name);
-            //Assert.Equal(request.CreatorName, fileInfo.Creator);
-            //Assert.True(fileInfo.Size >= 100 && fileInfo.Size < 250000);
-            //Assert.Equal(fileInfo.CreationDate.Date, DateTime.Now.Date);
+            fileManager.AddFile(request.Name, request.CreatorName);
+            var fileInfo = fileManager.GetNodeInfo(request.Name);
+            Assert.NotNull(fileInfo);
+            Assert.Equal(request.Name, fileInfo.Name);
+            Assert.Equal(request.CreatorName, fileInfo.Creator);
+            Assert.True(fileInfo.Size >= 100 && fileInfo.Size < 250000);
+            Assert.Equal(fileInfo.CreationDate, DateTime.Now.ToString("d"));
             var fileFormat = request.Name.Substring(request.Name.LastIndexOf('.') + 1)?.ToLowerInvariant();
             Assert.Equal(fileFormat, fileInfo.Format);
-            CurrentDirectory = fileInfo.ParentFolder;
-            CheckCurrentDirectory_Success();
+            Assert.Empty(fileInfo.SubNodes);
         }
+
+        [Fact]
+        void CreateFolder_Success()
+        {
+            var request = new CreateNodeDto
+            {
+                Name = "New Folder",
+                CreatorName = "John Doe"
+            };
+            fileManager.AddFolder(request.Name, request.CreatorName);
+            var folder = fileManager.GetNodeInfo(request.Name);
+            Assert.NotNull(folder);
+            Assert.Equal(request.Name, folder.Name);
+            Assert.Equal(request.CreatorName, folder.Creator);
+            Assert.Equal(0, folder.Size);
+            Assert.Equal(folder.CreationDate, DateTime.Now.ToString("d"));
+            Assert.Null(folder.Format);
+            Assert.Empty(folder.SubNodes);
+        }
+
+        [Fact]
+        void 
     }
 }

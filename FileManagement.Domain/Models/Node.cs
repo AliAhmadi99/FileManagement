@@ -50,5 +50,17 @@ namespace OopExercise.FileManagement.Domain.Models
             ParentFolder = targetFolder ??
                 throw new ArgumentNullException(nameof(targetFolder));
         }
+
+        public string GetPath()
+        {
+            var parent = ParentFolder;
+            var path = Name;
+            while (parent != null)
+            {
+                path = $@"{parent.Name}\{path}";
+                parent = parent.ParentFolder;
+            }
+            return path;
+        }
     }
 }

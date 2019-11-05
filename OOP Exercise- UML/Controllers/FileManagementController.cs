@@ -12,24 +12,19 @@ namespace OopExercise.FileManagement.Web.Controllers
     [Route("api/[controller]/[action]")]
     public class FileManagementController : Controller
     {
-        private readonly FileManager fileManager;
-        public FileManagementController()
-        {
-            var root = new Folder("Root", "Administrator", null);
-            fileManager = new FileManager(root);
-        }
+        private readonly FileManager fileManager = new FileManager("Root", "Administrator");
 
         [HttpPost]
         public IActionResult CreateFolder(CreateNodeDto newNode)
         {
-            fileManager.Add(newNode.Name, newNode.CreatorName);
+            fileManager.AddFolder(newNode.Name, newNode.CreatorName);
             return Ok(fileManager.GetCurrentDirectory());
         }
 
         [HttpPost]
         public IActionResult CreateFile(CreateNodeDto newNode)
         {
-            fileManager.Add(newNode.Name, newNode.CreatorName);
+            fileManager.AddFile(newNode.Name, newNode.CreatorName);
             return Ok();
         }
 

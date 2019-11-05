@@ -10,13 +10,21 @@ namespace OopExercise.FileManagement.Web.Dtos
         {
             Name = node.Name;
             Size = node.GetSize();
-            if (node is Folder folder)
-                SubNodes = folder.Nodes.Select(node => new FolderViewModel(node)).ToList();
+            SubNodes = node is Folder folder ?
+                folder.Nodes.Select(node => new FolderViewModel(node)).ToList() :
+                new List<FolderViewModel>();
+            if (node is File file)Format = file.Format;
+            Creator = node.Creator;
+            CreationDate = node.CreationDate.ToString("d");
+            ParentFolderName = node.ParentFolder.Name;
         }
 
         public string Name { get; }
-        public int Size { get;}
+        public int Size { get; }
         public List<FolderViewModel> SubNodes { get; }
-        
+        public string Format { get; set; }
+        public string Creator { get; set; }
+        public string CreationDate { get; }
+        public string ParentFolderName { get; }
     }
 }
