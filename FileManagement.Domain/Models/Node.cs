@@ -14,10 +14,12 @@ namespace OopExercise.FileManagement.Domain.Models
             Creator = creator ?? throw new ArgumentNullException(nameof(creator));
         }
 
-        public string Name { get; private set; }
+        public string Name { get; protected set; }
         public DateTime CreationDate { get; }
         public string Creator { get; }
         public Folder ParentFolder { get; private set; }
+
+
         public void Rename(string newName)
         {
             ValidateName(newName);

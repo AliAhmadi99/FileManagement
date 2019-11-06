@@ -25,8 +25,9 @@ namespace OopExercise.FileManagement.Domain.Models
         }
         public void Add(Node node)
         {
-            ValidateName(node.Name);
-            if (_nodes.Any(node => node.Name.Equals(node.Name)) is true)
+            var nodeName = node.Name;
+            ValidateName(nodeName);
+            if (_nodes.Any(node => node.Name.Equals(nodeName, StringComparison.OrdinalIgnoreCase)))
                 throw new Exception("A file or folder with this name is already exist.");
             _nodes.Add(node);
         }

@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OopExercise.FileManagement.Domain.Models;
 using OopExercise.FileManagement.Web.Dtos;
-using OopExercise.FileManagement.Web.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using OopExercise.FileManagement.FileSystemManager;
 
 namespace OopExercise.FileManagement.Web.Controllers
 {
@@ -31,7 +27,7 @@ namespace OopExercise.FileManagement.Web.Controllers
         [Route("{name}")]
         public IActionResult GoToDirectory(string name)
         {
-            fileManager.GoToDirectory(name);
+            fileManager.Open(name);
             return Ok(fileManager.GetCurrentDirectory());
         }
 

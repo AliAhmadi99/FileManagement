@@ -25,6 +25,5 @@ namespace OopExercise.FileManagement.Domain.Models
             ValidateName(format);
             return format;
         }
-
     }
 }

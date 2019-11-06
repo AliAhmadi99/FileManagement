@@ -1,12 +1,10 @@
 ﻿using OopExercise.FileManagement.Domain.Models;
-using OopExercise.FileManagement.Web.Dtos;
+using OopExercise.FileManagement.FileSystemManager.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace OopExercise.FileManagement.Web.Services
+namespace OopExercise.FileManagement.FileSystemManager
 {
     public class FileManager
     {
@@ -36,7 +34,7 @@ namespace OopExercise.FileManagement.Web.Services
             return node;
         }
 
-        public void GoToDirectory(string name)
+        public void Open(string name)
         {
             var targetDirectory = GetNode(name);
             if (targetDirectory is Folder folder) currentDirectory = folder;

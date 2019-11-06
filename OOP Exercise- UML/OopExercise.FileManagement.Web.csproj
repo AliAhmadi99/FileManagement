@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FileManagement.Domain\OopExercise.FileManagement.Domain.csproj" />
+    <ProjectReference Include="..\OopExercise.FileManagement.FileSystemManager\OopExercise.FileManagement.FileSystemManager.csproj" />
   </ItemGroup>
 
 </Project>

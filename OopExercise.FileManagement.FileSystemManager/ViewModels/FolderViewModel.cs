@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OopExercise.FileManagement.Web.Dtos
+namespace OopExercise.FileManagement.FileSystemManager.ViewModels
 {
     public class FolderViewModel
     {
@@ -13,7 +13,7 @@ namespace OopExercise.FileManagement.Web.Dtos
             SubNodes = node is Folder folder ?
                 folder.Nodes.Select(node => new FolderViewModel(node)).ToList() :
                 new List<FolderViewModel>();
-            if (node is File file)Format = file.Format;
+            if (node is File file) Format = file.Format;
             Creator = node.Creator;
             CreationDate = node.CreationDate.ToString("d");
             ParentFolderName = node.ParentFolder?.Name;
