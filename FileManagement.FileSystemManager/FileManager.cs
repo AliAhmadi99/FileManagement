@@ -1,10 +1,10 @@
-﻿using OopExercise.FileManagement.Domain.Models;
-using OopExercise.FileManagement.FileSystemManager.ViewModels;
+﻿using FileManagement.Domain.Models;
+using FileManagement.FileSystemManager.ViewModels;
 using System;
 using System.Diagnostics;
 using System.Linq;
 
-namespace OopExercise.FileManagement.FileSystemManager
+namespace FileManagement.FileSystemManager
 {
     public class FileManager
     {
@@ -65,15 +65,15 @@ namespace OopExercise.FileManagement.FileSystemManager
             currentDirectory.Remove(fileToRemove);
         }
 
-        public FolderViewModel GetCurrentDirectory()
+        public NodeInfoViewModel GetCurrentDirectory()
         {
-            return new FolderViewModel(currentDirectory);
+            return new NodeInfoViewModel(currentDirectory);
         }
 
-        public FolderViewModel GetNodeInfo(string nodeName)
+        public NodeInfoViewModel GetNodeInfo(string nodeName)
         {
             var node = GetNode(nodeName);
-            return new FolderViewModel(node);
+            return new NodeInfoViewModel(node);
         }
     }
 }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -14,8 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OOP Exercise- UML\OopExercise.FileManagement.Web.csproj" />
-    <ProjectReference Include="..\OopExercise.FileManagement.FileSystemManager\OopExercise.FileManagement.FileSystemManager.csproj" />
+    <ProjectReference Include="..\FileManagement.FileSystemManager\FileManagement.FileSystemManager.csproj" />
   </ItemGroup>
 
 </Project>

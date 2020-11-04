@@ -1,48 +1,38 @@
-﻿using OopExercise.FileManagement.Web.Dtos;
-using OopExercise.FileManagement.FileSystemManager;
+﻿using FileManagement.FileSystemManager;
 using System;
 using Xunit;
+using FileManagement.FileSystemManager.ViewModels;
 
-namespace OopExercise.FileManagement.Test
+namespace FileManagement.Test
 {
     public class FileManagementScenario
     {
         private readonly FileManager fileManager = new FileManager("Root", "Administrator");
-        private CreateNodeDto _createRequest;
 
         [Fact]
         void CreateFile_Success()
         {
-            _createRequest = new CreateNodeDto
-            {
-                Name = "test Video.mp4",
-                CreatorName = "Ali Ahmadi"
-            };
-            fileManager.AddFile(_createRequest.Name, _createRequest.CreatorName);
-            var fileInfo = fileManager.GetNodeInfo(_createRequest.Name);
+            var createdFile = CreateFile("Test Video.mp4", "Ali Ahmadi");
+            Assert.NotNull(createdFile);
+            var fileInfo = fileManager.GetNodeInfo(createdFile.Name);
             Assert.NotNull(fileInfo);
-            Assert.Equal(_createRequest.Name, fileInfo.Name);
-            Assert.Equal(_createRequest.CreatorName, fileInfo.Creator);
+            Assert.Equal(createdFile.Name, fileInfo.Name);
+            Assert.Equal(createdFile.Creator, fileInfo.Creator);
             Assert.True(fileInfo.Size >= 100 && fileInfo.Size < 250000);
             Assert.Equal(fileInfo.CreationDate, DateTime.Now.ToString("d"));
-            var fileFormat = _createRequest.Name.Substring(_createRequest.Name.LastIndexOf('.') + 1).ToLowerInvariant();
+            Assert.NotEmpty(fileInfo.Format);
+            var fileFormat = createdFile.Name.Substring(createdFile.Name.LastIndexOf('.') + 1).ToLowerInvariant();
             Assert.Equal(fileFormat, fileInfo.Format);
-            Assert.Empty(fileInfo.SubNodes);
         }
 
         [Fact]
         void CreateFolder_Success()
         {
-            _createRequest = new CreateNodeDto
-            {
-                Name = "New Folder",
-                CreatorName = "John Doe"
-            };
-            fileManager.AddFolder(_createRequest.Name, _createRequest.CreatorName);
-            var folder = fileManager.GetNodeInfo(_createRequest.Name);
+            string name = "Videos", creator = "Ali Ahmadi";
+            var folder = CreateFolder(name, creator);
             Assert.NotNull(folder);
-            Assert.Equal(_createRequest.Name, folder.Name);
-            Assert.Equal(_createRequest.CreatorName, folder.Creator);
+            Assert.Equal(name, folder.Name);
+            Assert.Equal(creator, folder.Creator);
             Assert.Equal(0, folder.Size);
             Assert.Equal(folder.CreationDate, DateTime.Now.ToString("d"));
             Assert.Null(folder.Format);
@@ -52,10 +42,10 @@ namespace OopExercise.FileManagement.Test
         [Fact]
         void RenameFolder_Success()
         {
-            CreateFolder_Success();
+            var createdFolder = CreateFolder();
             var renameRequest = new RenameNodeDto
             {
-                OldName = _createRequest.Name,
+                OldName = createdFolder.Name,
                 NewName = "Music Folder"
             };
             fileManager.Rename(renameRequest.OldName, renameRequest.NewName);
@@ -67,10 +57,10 @@ namespace OopExercise.FileManagement.Test
         [Fact]
         void RenameFile_Success()
         {
-            CreateFile_Success();
+            var createdFile = CreateFolder();
             var renameRequest = new RenameNodeDto
             {
-                OldName = _createRequest.Name,
+                OldName = createdFile.Name,
                 NewName = "My Movie.mp4"
             };
             fileManager.Rename(renameRequest.OldName, renameRequest.NewName);
@@ -82,40 +72,48 @@ namespace OopExercise.FileManagement.Test
         [Fact]
         void OpenNode_Success()
         {
-            CreateFolder_Success();
-            fileManager.Open(_createRequest.Name);
+            var createdFolder = CreateFolder();
+            fileManager.Open(createdFolder.Name);
             var currentDirectory = fileManager.GetCurrentDirectory();
-            Assert.Equal(_createRequest.Name, currentDirectory.Name);
-            Assert.Equal(_createRequest.CreatorName, currentDirectory.Creator);
+            Assert.Equal(createdFolder.Name, currentDirectory.Name);
+            Assert.Equal(createdFolder.Creator, currentDirectory.Creator);
         }
 
         [Fact]
         void CheckNodeSize_Success()
         {
-            _createRequest = new CreateNodeDto
-            {
-                Name = "New Folder3",
-                CreatorName = "James"
-            };
+            var createdNode = CreateFolder("New Folder3", "James");
             var totalSize = 0;
-            fileManager.AddFolder(_createRequest.Name, _createRequest.CreatorName);
-            fileManager.Open(_createRequest.Name);
+            fileManager.Open(createdNode.Name);
             for (int i = 0; i < 10; i++)
             {
-                _createRequest.Name = $"file{i}.mp4";
-                fileManager.AddFile(_createRequest.Name, _createRequest.CreatorName);
-                totalSize += fileManager.GetNodeInfo(_createRequest.Name).Size;
+                var newMp4File = CreateFile($"file{i}.mp4", createdNode.Creator);
+                totalSize += fileManager.GetNodeInfo(newMp4File.Name).Size;
             }
-            _createRequest.Name = "Folder28";
-            fileManager.AddFolder(_createRequest.Name, _createRequest.Name);
-            fileManager.Open(_createRequest.Name);
-            _createRequest.Name = "MyFile.pdf";
-            fileManager.AddFile(_createRequest.Name, _createRequest.CreatorName);
-            totalSize += fileManager.GetNodeInfo(_createRequest.Name).Size;
+            var folder28 = CreateFolder("Folder28", createdNode.Creator);
+            fileManager.Open(folder28.Name);
+            var myPdf = CreateFile("MyFile.pdf", createdNode.Creator);
+            totalSize += fileManager.GetNodeInfo(myPdf.Name).Size;
             fileManager.Back();
             fileManager.Back();
             var currentDirectory = fileManager.GetCurrentDirectory();
             Assert.Equal(totalSize, currentDirectory.Size);
         }
+
+        #region Private Methods
+        private NodeInfoViewModel CreateFolder(string name = "New Folder", string owner = "John Doe")
+        {
+            fileManager.AddFolder(name, owner);
+            var folder = fileManager.GetNodeInfo(name);
+            return folder;
+        }
+
+        private NodeInfoViewModel CreateFile(string name, string owner = "John Doe")
+        {
+            fileManager.AddFile(name, owner);
+            var folder = fileManager.GetNodeInfo(name);
+            return folder;
+        }
+        #endregion
     }
 }

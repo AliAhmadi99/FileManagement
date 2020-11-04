@@ -1,5 +1,4 @@
-﻿
-namespace OopExercise.FileManagement.Web.Dtos
+﻿namespace FileManagement.FileSystemManager.ViewModels
 {
     public class CreateNodeDto
     {

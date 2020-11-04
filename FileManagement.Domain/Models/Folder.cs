@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OopExercise.FileManagement.Domain.Models
+namespace FileManagement.Domain.Models
 {
     public class Folder : Node
     {

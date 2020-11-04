@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OopExercise.FileManagement.Domain.Models
+namespace FileManagement.Domain.Models
 {
     public class File : Node
     {
@@ -15,7 +15,7 @@ namespace OopExercise.FileManagement.Domain.Models
         }
 
         public string Format { get; private set; }
-        public int Size { get; set; }
+        public int Size { get; private set; }
 
         public override int GetSize() => Size;
         private string GetFormat(string fileName)
