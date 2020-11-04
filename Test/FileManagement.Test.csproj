@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FileManagement.FileSystemManager\FileManagement.FileSystemManager.csproj" />
+    <ProjectReference Include="..\FileSystemManager\FileManagement.FileSystemManager.csproj" />
   </ItemGroup>
 
 </Project>

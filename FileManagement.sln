@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagement.Test", "Test\FileManagement.Test.csproj", "{85A2FD27-E3F1-4AB1-BB19-32FF273418AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagement.Domain", "FileManagement.Domain\FileManagement.Domain.csproj", "{1B26B5DA-8D46-49FC-9676-FDA150A2C671}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagement.Domain", "Domain\FileManagement.Domain.csproj", "{1B26B5DA-8D46-49FC-9676-FDA150A2C671}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagement.FileSystemManager", "FileManagement.FileSystemManager\FileManagement.FileSystemManager.csproj", "{14EC390C-F766-4077-BE76-A906A8582DD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagement.FileSystemManager", "FileSystemManager\FileManagement.FileSystemManager.csproj", "{14EC390C-F766-4077-BE76-A906A8582DD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
